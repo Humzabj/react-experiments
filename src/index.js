@@ -14,7 +14,10 @@ import * as serviceWorker from './serviceWorker';
 class Square extends React.Component {
   render() {
     return (
-      <button className="square">
+      <button
+        className="square"
+        onClick={() => { this.props.onClick() }}
+      >
         {this.props.value}
       </button>
     );
@@ -22,8 +25,21 @@ class Square extends React.Component {
 }
 
 class Board extends React.Component {
+  constructor(props) {
+    // Must call super constructor to reference props from parent with this keyword
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null)
+    }
+  }
+
   renderSquare(i) {
-    return <Square value={i}/>;
+    return (
+      <Square
+        value={this.state.squares[i]}
+        onClick={() => { this.clickHandler(i)}}
+      />
+    );
   }
 
   render() {
