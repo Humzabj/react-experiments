@@ -44,6 +44,7 @@ class Board extends React.Component {
   }
 
   clickHandler(i) {
+    // Creating a shallow copy for immutability
     const squares = this.state.squares.slice();
     squares[i] = 'X';
     this.setState({squares: squares});
