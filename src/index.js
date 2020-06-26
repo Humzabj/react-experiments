@@ -12,6 +12,7 @@ import * as serviceWorker from './serviceWorker';
 // );
 
 class Square extends React.Component {
+  // Controlled component due to it's complete reliance on the Board component
   render() {
     return (
       <button
@@ -40,6 +41,12 @@ class Board extends React.Component {
         onClick={() => { this.clickHandler(i)}}
       />
     );
+  }
+
+  clickHandler(i) {
+    const squares = this.state.squares.slice();
+    squares[i] = 'X';
+    this.setState({squares: squares});
   }
 
   render() {
