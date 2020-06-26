@@ -11,18 +11,39 @@ import * as serviceWorker from './serviceWorker';
 //   document.getElementById('root')
 // );
 
-class Square extends React.Component {
-  // Controlled component due to it's complete reliance on the Board component
-  render() {
+// class Square extends React.Component {
+//   // Controlled component due to it's complete reliance on the Board component
+//   render() {
+//     return (
+//       <button
+//         className="square"
+//         onClick={() => { this.props.onClick() }}
+//       >
+//         {this.props.value}
+//       </button>
+//     );
+//   }
+// }
+
+function Square(props) {
+  /*
+  Converted to Function component. 
+  If a component only has the render method and no other methods or state 
+  it is better to convert them to Function Components
+  */
+  /* 
+  props.onClick() is now fed directly into the onClick function instead of
+  () => {this.props.onClick()} as their is no local variable environment to 
+  inject data form.
+  */ 
     return (
       <button
         className="square"
-        onClick={() => { this.props.onClick() }}
+        onClick={ props.onClick() }
       >
-        {this.props.value}
+        { props.value }
       </button>
     );
-  }
 }
 
 class Board extends React.Component {
