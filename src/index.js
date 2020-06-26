@@ -45,6 +45,12 @@ class Board extends React.Component {
 
   clickHandler(i) {
     // Creating a shallow copy for immutability
+    /* 
+      Immutability allows us to keep track of changes made to the data.
+      This can help is implementing functions that detect changes in data e.g. undo.
+      We can also use the manipulated data to trigger re-rendering as per the business 
+      logic (i.e pure components, look at shouldComponentUpdate() funciton).
+    */ 
     const squares = this.state.squares.slice();
     squares[i] = 'X';
     this.setState({squares: squares});
