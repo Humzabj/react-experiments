@@ -39,7 +39,7 @@ function Square(props) {
     return (
       <button
         className="square"
-        onClick={ props.onClick() }
+        onClick={ props.onClick }
       >
         { props.value }
       </button>
@@ -51,34 +51,38 @@ class Board extends React.Component {
     // Must call super constructor to reference props from parent with this keyword
     super(props);
     this.state = {
-      squares: Array(9).fill(null)
+      squares: Array(9).fill(null),
+      xIsNext: true,
     }
   }
 
   renderSquare(i) {
     return (
       <Square
-        value={this.state.squares[i]}
+        value={ this.state.squares[i] }
         onClick={() => { this.clickHandler(i)}}
       />
     );
   }
 
   clickHandler(i) {
-    // Creating a shallow copy for immutability
+    // Creating a shallow copy for immutability with slice() method
     /* 
       Immutability allows us to keep track of changes made to the data.
-      This can help is implementing functions that detect changes in data e.g. undo.
+      This can help in implementing functions that detect changes in data e.g. undo.
       We can also use the manipulated data to trigger re-rendering as per the business 
       logic (i.e pure components, look at shouldComponentUpdate() funciton).
     */ 
     const squares = this.state.squares.slice();
-    squares[i] = 'X';
-    this.setState({squares: squares});
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    this.setState({
+      squares: squares,
+      xIsNext: !this.state.xIsNext
+    });
   }
 
   render() {
-    const status = 'Next player: X';
+    const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     return (
       <div>
         <div className="status">{status}</div>
