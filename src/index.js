@@ -32,9 +32,12 @@ function Square(props) {
   it is better to convert them to Function Components
   */
   /* 
-  props.onClick() is now fed directly into the onClick function instead of
+  props.onClick is now fed directly into the onClick function instead of
   () => {this.props.onClick()} as their is no local variable environment to 
   inject data form.
+  ****************** NOTE ****************** 
+  Remember not to pass props.onClick() with the bracket because that sets 
+  up an infinite loop which will raise an error
   */ 
     return (
       <button
