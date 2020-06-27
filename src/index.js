@@ -102,6 +102,7 @@ class Game extends React.Component {
       history: [{
         squares: Array(9).fill(null),
       }],
+      stepNumber: 0,
       xIsNext: true,
     }
   }
@@ -114,21 +115,22 @@ class Game extends React.Component {
       We can also use the manipulated data to trigger re-rendering as per the business 
       logic (i.e pure components, look at shouldComponentUpdate() funciton).
     */ 
-    const history = this.state.history;
+    const history = this.state.history.slice(0, this.state.stepNumber + 1);
     // Current move will always be the last index of history
     const current = history[history.length - 1];
     const squares = current.squares.slice();
+    // The click returns null if the game has been won of the board has been filled.
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
     squares[i] = this.state.xIsNext ? 'X' : 'O';
     // The .concat() method does not mutate the original array like the .push() method does.
     this.setState({
-      history: [{
+      history: history.concat([{
         squares: squares,
-      }],
-      stepNumber: 0,
-      xIsNext: !this.state.xIsNext
+      }]),
+      stepNumber: history.length,
+      xIsNext: !this.state.xIsNext,
     });
   }
 
@@ -142,8 +144,16 @@ class Game extends React.Component {
 
   render() {
     const history = this.state.history;
-    // Current move will always be the last index of history
+    /* 
+    The current stepNumber now determines the rendering of the board.
+    This allows the user to navigate between different turns.
+    */
+    /* 
+    **Deprecated**
+    Current move will always be the last index of history
     const current = history[history.length - 1];
+    */
+    const current = history[this.state.stepNumber];
     // Winner will be decided on current move
     const winner = calculateWinner(current.squares);
 
